@@ -1,22 +1,16 @@
-'use strict';
-
 var CLOUD_WIDTH = 420;
 var CLOUD_HEIGHT = 270;
 var CLOUD_X = 100;
 var CLOUD_Y = 10;
-var CLOUD_COLOR = rgb(255, 255, 255);
 var SHADOW_X = 110;
 var SHADOW_Y = 20;
-var SHADOW_COLOR = rgba(0, 0, 0, 0.7);
 var GAP = 10;
-var CONTENT_COLOR = rgb(0, 0, 0, 0);
-var TEXT_WIDTH = 40; // ширина области подписи, как и ширина столбиков
 var CONTENT_GAP = 50; // расстояние между столбиками и подписями
-var BAR_WIDTH = 40;
-var BAR_MAX_HEIGHT = 150;
+var BAR_WIDTH = 40; //ширина столбца и ширина области подписи
+var BAR_MAX_HEIGHT = 150; //максимальная высота столбца
 var CONTENT_X = BAR_WIDTH + CONTENT_GAP; //начало текста по х = сдвиг окна по х + расстояние между именами
-var MESSAGE_HEIGHT = 50;
-var TEXT_HEIGHT = 20;
+var MESSAGE_HEIGHT = 50; //высота подписи окна
+var TEXT_HEIGHT = 20; //высота подписи на диагарамме
 
 
 var renderCloud = function (ctx, x, y, color) { // рисуем облако
@@ -35,32 +29,26 @@ var getMaxElement = function (arr) { //ищем максимальное зна�
   return maxElement;
 };
 
-var setFontStyle = function (ctx, font, baseline, style) { //Надпись на поле
-  ctx.font = font;
-  ctx.textBaseline = baseline;
-  ctx.fillStyle = style;
-};
-
 window.renderStatistics = function (ctx, players, times) { //отрисовка окна
   renderCloud(
     ctx,
     SHADOW_X,
     SHADOW_Y,
-    SHADOW_COLOR //тень
+    'rgba(0, 0, 0, 0.7)' //тень
   );
 
   renderCloud( //белое окно
     ctx,
     CLOUD_X,
     CLOUD_Y,
-    CLOUD_COLOR
+    '#fff'
   );
 
   ctx.fillStyle = '#000'; //цвет заливки уменя должен будет меняться
-  ctx.font = `16px PT Mono`;
-  ctx.textBaseline = `hanging`;
-  ctx.fillText(`Ура вы победили!`, CLOUD_X + GAP * 2, CLOUD_Y + GAP * 2);
-  ctx.fillText(`Список результатов:`, CLOUD_X + GAP * 2, CLOUD_Y + GAP * 4);
+  ctx.font = '16px PT Mono';
+  ctx.textBaseline = 'hanging';
+  ctx.fillText('Ура вы победили!', CLOUD_X + GAP * 2, CLOUD_Y + GAP * 2);
+  ctx.fillText('Список результатов:', CLOUD_X + GAP * 2, CLOUD_Y + GAP * 4);
 
   var maxTime = getMaxElement(times);
 
@@ -77,11 +65,11 @@ window.renderStatistics = function (ctx, players, times) { //отрисовка 
     );
   }
 
-  for (let j = 0; j < players.length; j++) {
-    if (players[j] === `Вы`) {
-      ctx.fillStyle = `rgba(255, 0, 0, 1)`;
+  for (var j = 0; j < players.length; j++) { // Цикл для изменения цвета
+    if (players[j] === 'Вы') {
+      ctx.fillStyle = 'rgba(255, 0, 0, 1)';
     } else {
-      ctx.fillStyle = `hsl(240, ` + Math.random() * 100 + `% , 50%)`;
+      ctx.fillStyle = 'hsl(240, ' + Math.random() * 100 + '% , 50%)';
     }
     ctx.fillRect(
       CLOUD_X + BAR_WIDTH + CONTENT_X * j,
@@ -90,4 +78,4 @@ window.renderStatistics = function (ctx, players, times) { //отрисовка 
       BAR_MAX_HEIGHT * times[j] / maxTime
     );
   }
-}
+};
