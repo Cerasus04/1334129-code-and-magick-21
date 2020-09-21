@@ -14,7 +14,6 @@ var CONTENT_X = BAR_WIDTH + CONTENT_GAP;
 var MESSAGE_HEIGHT = 50;
 var TEXT_HEIGHT = 20;
 
-
 var renderCloud = function (ctx, x, y, color) {
   ctx.fillStyle = color;
   ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);

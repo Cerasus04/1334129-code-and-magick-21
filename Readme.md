@@ -1,7 +1,7 @@
 # Учебный проект «Код и Магия» [![Build status][travis-image]][travis-url]
 
 * Студент: [Евгения Стецюра](https://up.htmlacademy.ru/javascript/21/user/1334129).
-* Наставник: `Неизвестно`.
+* Наставник: Евгений Лепёшкин.
 
 ---
 
