@@ -5,25 +5,25 @@ var CLOUD_HEIGHT = 270;
 var CLOUD_X = 100;
 var CLOUD_Y = 10;
 var GAP = 10;
-var TEXT_WIDTH = 50;
-var BAR_WIDTH = 40;
+var BAR_GAP = 50;
 var BAR_MAX_HEIGHT = 150;
+var CLOUD_OFFSET_X = CLOUD_X + GAP;
+var CLOUD_OFFSET_Y = CLOUD_Y + GAP;
+var BAR_WIDTH = 40;
 var CONTENT_X = CLOUD_X + BAR_WIDTH;
-var CLOUD_COLOR = 'rgb(255, 255, 255)';
-var SHADOW_COLOR = 'rgba(0, 0, 0, 0.7)';
-var CONTENT_OFFSET_X = CLOUD_X + GAP * 2;
-var CONTENT_OFFSET_Y = CLOUD_Y + GAP * 2;
 
-var renderCloud = function (ctx, x, y, width, height) {
-  ctx.fillStyle = CLOUD_COLOR;
-  ctx.shadowColor = SHADOW_COLOR;
-  ctx.shadowOffsetX = GAP;
-  ctx.shadowOffsetY = GAP;
+var drawRect = function (ctx, x, y, width, height, color) { //отрисовка прямоугольников
+  ctx.fillStyle = color || '#000000';
   ctx.fillRect(x, y, width, height);
-  ctx.shadowColor = 'rgba(0, 0, 0, 0)';
 };
 
-var getMaxElement = function (arr) {
+var drawText = function (ctx, text, x, y, color, font) { //отрисовка текста
+  ctx.fillStyle = color || '#000000';
+  ctx.font = font || '16px PT Mono';
+  ctx.fillText(text, x, y);
+};
+
+var getMaxElement = function (arr) { //поиск максимального элемента
   var maxElement = arr[0];
 
   for (var i = 1; i < arr.length; i++) {
@@ -34,34 +34,21 @@ var getMaxElement = function (arr) {
   return maxElement;
 };
 
-var setFontStyle = function (ctx, font, baseline, style) {
-  ctx.font = font;
-  ctx.textBaseline = baseline;
-  ctx.fillStyle = style;
-};
+window.renderStatistics = function (ctx, players, times) {
+  drawRect(ctx, CLOUD_OFFSET_X, CLOUD_OFFSET_Y, CLOUD_WIDTH, CLOUD_HEIGHT, 'rgba(0, 0, 0, 0.7)');
+  drawRect(ctx, CLOUD_X, CLOUD_Y, CLOUD_WIDTH, CLOUD_HEIGHT, '#FFFFFF');
+  drawText(ctx, 'Ура вы победили!', CLOUD_OFFSET_X + GAP, CLOUD_OFFSET_Y + GAP * 2);
+  drawText(ctx, 'Список результатов:', CLOUD_OFFSET_X + GAP, (CLOUD_OFFSET_Y + GAP) * 2);
 
-var drawHistogram = function (ctx, names, times) {
   var maxTime = getMaxElement(times);
 
-  names.forEach(function (name, index) {
-    var time = Math.floor(times[index]);
-    var barX = CONTENT_X + (BAR_WIDTH + TEXT_WIDTH) * index;
-    var barHeight = (BAR_MAX_HEIGHT * time) / maxTime;
+  for (var i = 0; i < players.length; i++) {
+    var barX = CONTENT_X + (BAR_WIDTH + BAR_GAP) * i;
+    var barHeight = (BAR_MAX_HEIGHT * times[i]) / maxTime;
     var barY = CLOUD_HEIGHT - GAP * 2 - barHeight;
 
-    setFontStyle(ctx, '16px PT Mono', 'hanging', 'rgb(0, 0, 0)');
-
-    ctx.fillText(name, barX, CLOUD_HEIGHT - GAP);
-    ctx.fillText(time, barX, barY - GAP * 2);
-    ctx.fillStyle = name === 'Вы' ? 'rgba(255, 0, 0, 1)' : 'hsl(240, ' + Math.random() * 100 + '% , 50%)';
-    ctx.fillRect(barX, barY, BAR_WIDTH, barHeight);
-  });
-};
-
-window.renderStatistics = function (ctx, names, times) {
-  renderCloud(ctx, CLOUD_X, CLOUD_Y, CLOUD_WIDTH, CLOUD_HEIGHT);
-  setFontStyle(ctx, '16px PT Mono', 'hanging', 'rgb(0, 0, 0)');
-  ctx.fillText('Ура вы победили!', CONTENT_OFFSET_X, CONTENT_OFFSET_Y);
-  ctx.fillText('Список результатов:', CONTENT_OFFSET_X, (CONTENT_OFFSET_Y) * 2);
-  drawHistogram(ctx, names, times);
+    drawText(ctx, Math.round(times[i]).toString(), barX, barY - GAP * 2);
+    drawRect(ctx, barX, barY - GAP, BAR_WIDTH, barHeight, (players[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'hsl(240,' + (Math.random().toString() * 100) + '%,50%');
+    drawText(ctx, players[i].toString(), barX, CLOUD_HEIGHT - GAP);
+  }
 };
