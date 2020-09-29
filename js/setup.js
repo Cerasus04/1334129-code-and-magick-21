@@ -6,22 +6,9 @@ var COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161
 var EYE_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
 var WIZARD_COUNT = 4;
 
-// Дополнительная функции
 var getRandomElement = function (array) {
   return array[Math.floor(Math.random() * array.length)];
 };
-
-// Функция для создания массива данных игроков
-
-var createPlayerObject = function () {
-  var name = getRandomElement(FIRST_NAMES) + ' ' + getRandomElement(SURNAMES);
-  var coatColor = getRandomElement(COAT_COLORS);
-  var eyesColor = getRandomElement(EYE_COLORS);
-  var player = [name, coatColor, eyesColor];
-  return player;
-};
-
-// Функция создания игрока
 
 var createPlayerItem = function (playerObject) {
   var playerItem = playerTemplateItem.cloneNode(true);
@@ -39,8 +26,14 @@ var createPlayerItem = function (playerObject) {
 var createPlayersArray = function (arrayLength) {
   var playersArray = [];
   for (var i = 0; i < arrayLength; i++) {
-    playersArray.push(createPlayerObject());
+    var player = {
+      name: getRandomElement(FIRST_NAMES) + ' ' + getRandomElement(SURNAMES),
+      coatColor: getRandomElement(COAT_COLORS),
+      eyesColor: getRandomElement(EYE_COLORS)
+    };
+    playersArray.push(player);
   }
+
   return playersArray;
 };
 
@@ -54,7 +47,6 @@ var initializePlayerSetup = function () {
   playersList.appendChild(playersFragment);
 };
 
-// Находим DOM-элементы
 var playerTemplateItem = document
   .querySelector('#similar-wizard-template')
   .content.querySelector('.setup-similar-item');
@@ -62,8 +54,6 @@ var playerContainer = document.querySelector('.setup-similar');
 var playersList = document.querySelector('.setup-similar-list');
 var setup = document.querySelector('.setup');
 
-
-// Добавляем результат работы в DOM, снимаем скрывающий класс
 initializePlayerSetup(WIZARD_COUNT);
 setup.classList.remove('hidden');
 playerContainer.classList.remove('hidden');
