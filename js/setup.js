@@ -23,15 +23,14 @@ var createPlayerItem = function (playerObject) {
   return playerItem;
 };
 
-var createPlayersArray = function (arrayLength) {
+var createPlayersArray = function (WIZARD_COUNT) { //возможно имеет ввиду  4
   var playersArray = [];
-  for (var i = 0; i < arrayLength; i++) {
-    var player = {
+  for (var i = 0; i < WIZARD_COUNT; i++) {
+    playersArray.push({
       name: getRandomElement(FIRST_NAMES) + ' ' + getRandomElement(SURNAMES),
       coatColor: getRandomElement(COAT_COLORS),
       eyesColor: getRandomElement(EYE_COLORS)
-    };
-    playersArray.push(player);
+    });
   }
 
   return playersArray;
@@ -41,8 +40,7 @@ var initializePlayerSetup = function () {
   var playersFragment = document.createDocumentFragment();
   var playersArray = createPlayersArray(WIZARD_COUNT);
   for (var i = 0; i < playersArray.length; i++) {
-    var newPlayerItem = createPlayerItem(playersArray[i]);
-    playersFragment.appendChild(newPlayerItem);
+    playersFragment.appendChild(createPlayerItem(playersArray[i]));
   }
   playersList.appendChild(playersFragment);
 };
@@ -54,7 +52,7 @@ var playerContainer = document.querySelector('.setup-similar');
 var playersList = document.querySelector('.setup-similar-list');
 var setup = document.querySelector('.setup');
 
-initializePlayerSetup(WIZARD_COUNT);
+initializePlayerSetup();
 setup.classList.remove('hidden');
 playerContainer.classList.remove('hidden');
 
