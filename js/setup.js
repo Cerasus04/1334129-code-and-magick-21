@@ -23,7 +23,7 @@ var createPlayerItem = function (playerObject) {
   return playerItem;
 };
 
-var createPlayersArray = function (WIZARD_COUNT) { //возможно имеет ввиду  4
+var createPlayersArray = function (WIZARD_COUNT) {
   var playersArray = [];
   for (var i = 0; i < WIZARD_COUNT; i++) {
     playersArray.push({
@@ -56,3 +56,48 @@ initializePlayerSetup();
 setup.classList.remove('hidden');
 playerContainer.classList.remove('hidden');
 
+var setupOpen = document.querySelector('.setup-open');
+var setup = document.querySelector('.setup');
+var setupClose = setup.querySelector('.setup-close');
+
+var onPopupEscPress = function (evt) {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    // if (!evt.matches('input[type="text"]')) {
+    //   closePopup()
+    // };
+    closePopup();
+  }
+};
+
+var openPopup = function () {
+  setup.classList.remove('hidden');
+
+  document.addEventListener('keydown', onPopupEscPress);
+};
+
+var closePopup = function () {
+  setup.classList.add('hidden');
+
+  document.removeEventListener('keydown', onPopupEscPress);
+};
+
+setupOpen.addEventListener('click', function () {
+  openPopup();
+});
+
+setupOpen.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    openPopup();
+  }
+});
+
+setupClose.addEventListener('click', function () {
+  closePopup();
+});
+
+setupClose.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    closePopup();
+  }
+});
