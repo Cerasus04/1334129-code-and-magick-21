@@ -53,19 +53,18 @@ var playersList = document.querySelector('.setup-similar-list');
 var setup = document.querySelector('.setup');
 
 initializePlayerSetup();
-setup.classList.remove('hidden');
 playerContainer.classList.remove('hidden');
 
 var setupOpen = document.querySelector('.setup-open');
-var setup = document.querySelector('.setup');
 var setupClose = setup.querySelector('.setup-close');
 
+var elementInFocus = function (selector) {
+  return document.querySelector(selector) === document.activeElement;
+};
+
 var onPopupEscPress = function (evt) {
-  if (evt.key === 'Escape') {
+  if (evt.key === 'Escape' && !elementInFocus(`.setup-user-name`)) {
     evt.preventDefault();
-    // if (!evt.matches('input[type="text"]')) {
-    //   closePopup()
-    // };
     closePopup();
   }
 };
