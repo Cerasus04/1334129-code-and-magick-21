@@ -55,6 +55,6 @@ var getNewColor = function (array) {
   return colorize;
 };
 
-wizardColorCoat.addEventListener('click', getNewColor(COAT_COLORS));
-wizardColorEyes.addEventListener('click', getNewColor(EYES_COLORS));
-wizardColorFireball.addEventListener('click', getNewColor(FIRE_COLORS));
+// wizardColorCoat.addEventListener('click', getNewColor(COAT_COLORS));
+// wizardColorEyes.addEventListener('click', getNewColor(EYES_COLORS));
+// wizardColorFireball.addEventListener('click', getNewColor(FIRE_COLORS));
