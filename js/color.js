@@ -11,10 +11,10 @@ var COAT_COLORS = [
 var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
 var FIRE_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 
-var wizardSetup = document.querySelector('.setup-player');
-var wizardColorCoat = wizardSetup.document.querySelector('.coat-color');
-var wizardColorEyes = wizardSetup.document.querySelector('.eyes-color');
-var wizardColorFireball = wizardSetup.document.querySelector('fireball-color');
+var wizardSetup = document.querySelector('.setup-wizard');
+var wizardColorCoat = wizardSetup.document.querySelector('.wizard-coat');
+var wizardColorEyes = wizardSetup.document.querySelector('.wizard-eyes');
+var wizardColorFireball = wizardSetup.document.querySelector('.setup-fireball-wrap');
 
 var getRandomRange = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
